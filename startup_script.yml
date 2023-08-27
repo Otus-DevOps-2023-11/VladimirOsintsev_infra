@@ -1,0 +1,19 @@
+#cloud-config
+package_update: true
+users:
+  - name: appuser
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC+nICOWdvacYyYh815SFJd4PedRFIvpARnKrb1Z88MPX1n0RZuPksYLsj9GBobW1qPn7tMdkMf2bun0YLV9Ip1t5D36EpI2EabhPUm/QUxQ3+qf7BlP7u943WZLKy2AiTiIhmVT5G4E6cs/bJCxZHIA2W7JwyNolYYwnxnztDEUwtGnRGvCC9Cz8Xy/7ieXdE+c3RQxdc3jhQnbv5hJDYqMuK1QxZvNwOi6HRB5gpL7/UErAo8Vnh3qoHh7W1AgV6FEuU2n0xeyrBpyMuP1BDX2Fh0+h/Zkc8KKkgDbz+ZLs9jvUfUb0EvzhI5511yo1hcz9PULKbzs4wuyn6j15oOppyG/Z+yP75yMmGoiNbZY4y+lca4rrEOx2fkQmM6dxdD+Qd12zyl8BwpwzX9bqfnLGmgvbcG5wiXz/bD3p37fRqc5bcvijDy0zinyPQgiCANtfNYN+P6ICFXeF0du6Ik8iStMHxTvXbiB/hMZqT9h//tf8spdf9lQz3d0vRVZP8= appuser
+packages:
+  - ruby-full
+  - ruby-bundler
+  - build-essential
+  - mongodb
+  - git
+runcmd:
+  - git clone -b monolith https://github.com/express42/reddit.git
+  - cd reddit && bundle install
+  - puma -d
