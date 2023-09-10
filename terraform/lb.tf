@@ -12,7 +12,7 @@ resource "yandex_lb_target_group" "redditappgrp" {
 
 resource "yandex_lb_network_load_balancer" "redditapplb" {
   name                = "redditapplb"
-  deletion_protection = "false"
+#  deletion_protection = "false"
   listener {
     name        = "reddit-listener"
     port        = 9292
