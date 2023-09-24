@@ -1,22 +1,20 @@
-#terraform {
-#  required_providers {
-#    yandex = {
-#      source = "yandex-cloud/yandex"
-#      version = "0.95.0"
-#    }
-#  }
-#}
-
-provider "yandex" {
-  service_account_key_file = var.service_account_key_file
-  zone                     = var.zone
-  folder_id                = var.folder_id
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+    }
+  }
+  required_version = ">= 0.13"
 }
 
 resource "yandex_compute_instance" "app" {
-  name  = "reddit-app${count.index + 1}"
-  zone  = var.zone_instance
-  count = var.counts
+  name  = "${var.env}-reddit-app"
+  labels = {
+    tags = "${var.env}-reddit-app"
+  }
+  zone  = var.zone
+#  count = (var.provision == true ? 1 : 0)
+  allow_stopping_for_update = true
   resources {
     cores  = 2
     memory = 2
@@ -33,16 +31,20 @@ resource "yandex_compute_instance" "app" {
     private_key = file(var.private_key_path)
   }
   provisioner "file" {
-    source      = "files/puma.service"
+    source      = "${path.module}/puma.service"
     destination = "/tmp/puma.service"
   }
+  provisioner "file" {
+    source      = "${path.module}/deploy.sh"
+    destination = "/tmp/deploy.sh"
+  }
   provisioner "remote-exec" {
-    script = "files/deploy.sh"
+    inline = concat(["echo Provisioning"], [for command in ["chmod u+x /tmp/deploy.sh", "/tmp/deploy.sh ${var.db_ip}"]: command if var.provision])
   }
   boot_disk {
     initialize_params {
       # Указать id образа созданного в предыдущем домашнем задании
-      image_id = var.image_id
+      image_id = var.app_disk_image
     }
   }
   network_interface {
