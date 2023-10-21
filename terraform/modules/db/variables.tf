@@ -18,3 +18,7 @@ variable "zone" {
 variable env {
   description = "Enviroment"
 }
+
+variable "provision" {
+  description = "Disable/Enable Provisioning"
+}

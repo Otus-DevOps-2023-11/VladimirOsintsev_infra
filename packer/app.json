@@ -16,21 +16,8 @@
   ],
   "provisioners": [
   {
-    "type": "shell",
-    "inline": ["echo set debconf to Noninteractive","echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections"]
-  },
-  {
-    "type": "shell",
-    "script": "scripts/shutdown-apt-services.sh"
-  },
-  {
-    "type": "shell",
-    "script": "scripts/install_ruby.sh",
-    "execute_command": "sudo {{.Path}}"
-  },
-  {
-    "type": "shell",
-    "inline": ["sudo systemctl enable apt-daily.timer", "sudo systemctl enable apt-daily-upgrade.timer"]
+    "type": "ansible",
+    "playbook_file": "../ansible/packer_app.yml"
   }
   ]
 }

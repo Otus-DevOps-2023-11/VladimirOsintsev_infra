@@ -40,4 +40,5 @@ module "db" {
   subnet_id       = module.vpc.vpc_subnet_id
   zone            = var.zone
   env             = var.env
+  provision       = var.provision
 }

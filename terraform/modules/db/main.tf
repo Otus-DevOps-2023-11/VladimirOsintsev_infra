@@ -1,12 +1,12 @@
-#terraform {
-#  required_providers {
-#    yandex = {
-#      source = "yandex-cloud/yandex"
-#    }
-#  }
-#  required_version = ">= 0.13"
-#}
-#
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+    }
+  }
+  required_version = ">= 0.13"
+}
+
 resource "yandex_compute_instance" "db" {
   name  = "${var.env}-reddit-db"
   labels = {
@@ -30,9 +30,18 @@ resource "yandex_compute_instance" "db" {
     # путь до приватного ключа
     private_key = file(var.private_key_path)
   }
-  provisioner "remote-exec" {
-    script = "${path.module}/mongod.sh"
+#  provisioner "remote-exec" {
+#    script = "${path.module}/mongod.sh"
+#  }
+   provisioner "file" {
+     source      = "${path.module}/mongod.sh"
+     destination = "/tmp/mongod.sh"
+   }
+
+   provisioner "remote-exec" {
+     inline = concat(["echo Provisioning"], [for command in ["chmod u+x /tmp/mongod.sh", "/tmp/mongod.sh"]: command if var.provision])
   }
+
   boot_disk {
     initialize_params {
       # Указать id образа созданного в предыдущем домашнем задании

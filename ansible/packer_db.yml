@@ -1,0 +1,31 @@
+- name: Packer & deploy mongodb
+  hosts: all
+  connection: local
+  become: true
+  tasks:
+    - name: Add an Apt signing key, uses whichever key is at the URL
+      apt_key:
+        id: EA312927
+        keyserver: keyserver.ubuntu.com
+    - name: Add repo mongoDB
+      apt_repository:
+        repo: deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse
+        state: present
+        filename: mongodb-org-3.2.list
+    - name: Install ruby and bundler
+      apt:
+        name: mongodb-org
+        state: present
+        update_cache: yes
+    - name: Start service MogoDB
+      systemd:
+        name: mongod
+        state: started
+        daemon_reload: yes
+    - name: Enable service MogoDB
+      systemd:
+        name: mongod
+        enabled: yes
+        #
+        #    - name:  daemon_reload
+        #      systemd: daemon_reload=true
