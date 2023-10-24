@@ -2,17 +2,20 @@
   hosts: all
   connection: local
   become: true
+  ansible_become_password: httphttp
   tasks:
     - name: Add an Apt signing key, uses whichever key is at the URL
       apt_key:
-        id: EA312927
-        keyserver: keyserver.ubuntu.com
+        url: https://www.mongodb.org/static/pgp/server-3.2.asc
+        state: present
+      #        id: EA312927
+      #        keyserver: keyserver.ubuntu.com
     - name: Add repo mongoDB
       apt_repository:
         repo: deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse
         state: present
         filename: mongodb-org-3.2.list
-    - name: Install ruby and bundler
+    - name: Install MongoDB
       apt:
         name: mongodb-org
         state: present
