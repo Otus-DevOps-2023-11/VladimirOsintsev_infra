@@ -2,7 +2,7 @@
   hosts: app
   become: true
   vars:
-    db_host: "158.160.98.35:27017"
+    db_host: "62.84.127.125:27017"
   tasks:
     - name:  daemon_reload
       systemd: daemon_reload=true
