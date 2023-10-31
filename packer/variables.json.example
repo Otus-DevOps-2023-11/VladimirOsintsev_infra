@@ -2,7 +2,7 @@
   "folder_id": "folder_id",
   "zone": "zone",
   "subnet_id": "subnet_id",
-  "service_account_key_file": "key-packer.json.example",
+  "service_account_key_file": "packer/key-packer.json.example",
   "use_ipv4_nat": "true",
   "source_image_family": "ubuntu-1604-lts",
   "image_family": "reddit-base",
