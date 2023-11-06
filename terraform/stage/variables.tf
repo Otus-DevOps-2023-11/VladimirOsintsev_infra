@@ -40,12 +40,12 @@ variable "counts" {
 
 variable "app_disk_image" {
   description = "Disk image for reddit app"
-  default = "fd8cjp39j7jinfho2q4k"
+  default = "fd821mkth0kl1gb0u11m"
 }
 
 variable "db_disk_image" {
   description = "Disk image for reddit db"
-  default = "fd81uq6hh1j7cti40bo9"
+  default = "fd8at843ifdcfc7idg8m"
 }
 variable "env" {
  description = "Enviroment"
@@ -53,5 +53,5 @@ variable "env" {
 }
 variable "provision" {
   description = "Enable/Disable provision"
-  default = true
+  default = false
 }

@@ -53,5 +53,5 @@ variable "env" {
 }
 variable "provision" {
   description = "Enable/Disable provision"
-  default = true
+  default = false
 }

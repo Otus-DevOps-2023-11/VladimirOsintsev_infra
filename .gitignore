@@ -7,3 +7,4 @@ variables.pkr.hcl
 key-terraform.json
 .terraform.lock.hcl
 *.old
+*.retry
