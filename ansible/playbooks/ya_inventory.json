@@ -1,0 +1,24 @@
+{
+  "_meta": {
+    "hostvars": {
+      "stage-reddit-db": {
+        "ansible_host": "51.250.8.176",
+        "env": "stage"
+      },
+      "stage-reddit-app": {
+        "ansible_host": "158.160.125.233",
+        "env": "stage"
+      }
+    }
+  },
+  "all": {
+    "hosts": [
+      "stage-reddit-db",
+      "stage-reddit-app"
+    ],
+    "vars": {
+      "ansible_connection": "ssh",
+      "ansible_user": "ubuntu"
+    }
+  }
+}
