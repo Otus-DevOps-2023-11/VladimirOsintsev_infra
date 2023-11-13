@@ -8,3 +8,4 @@ key-terraform.json
 .terraform.lock.hcl
 *.old
 *.retry
+jdauphant.nginx
