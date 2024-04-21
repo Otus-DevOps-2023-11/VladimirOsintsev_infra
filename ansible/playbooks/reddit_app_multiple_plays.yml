@@ -1,0 +1,70 @@
+- name: Configure hosts & deploy application
+  hosts: db
+  tags: db-tag
+  become: true
+  vars:
+    mongo_bind_ip: 0.0.0.0
+  tasks:
+    - name:  daemon_reload
+      systemd: daemon_reload=true
+    - name: Change mongo config file
+      template:
+        src: templates/mongod.conf.j2
+        dest: /etc/mongod.conf
+        mode: 0644
+      notify: restart mongod
+
+  handlers:
+    - name: restart mongod
+      service: name=mongod state=restarted
+
+- name: Configure hosts & deploy application
+  hosts: app
+  tags: app-tag
+  become: true
+  vars:
+    db_host: "158.160.32.127:27017"
+  tasks:
+    - name:  daemon_reload
+      systemd: daemon_reload=true
+
+    - name: Add unit file for Puma
+      copy:
+        src: files/puma.service
+        dest: /etc/systemd/system/puma.service
+      notify: reload puma
+    - name: enable puma
+      systemd: name=puma daemon_reload=true enabled=yes
+    - name: Add config for DB connection
+      template:
+        src: templates/db_config.j2
+        dest: /home/ubuntu/db_config
+  handlers:
+    - name: reload puma
+      systemd: name=puma state=restarted
+
+- name: Configure hosts & deploy application
+  hosts: app
+  tags: deploy-tag
+  become: true
+  tasks:
+    - name: Install git
+      apt:
+        name:
+        - git
+        - bundler
+        state: present
+        update_cache: yes
+    - name: Fetch the latest version of application code
+      git:
+        repo: 'https://github.com/express42/reddit.git'
+        dest: /home/ubuntu/reddit
+        version: monolith
+      notify: reload puma
+    - name: Bundle Install
+      bundler:
+        state: present
+        chdir: /home/ubuntu/reddit
+  handlers:
+    - name: reload puma
+      systemd: name=puma state=restarted

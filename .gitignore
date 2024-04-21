@@ -1,0 +1,18 @@
+*.tfstate
+*.tfstate.*.backup
+*.tfstate.backup
+*.tfvars
+.terraform/
+variables.pkr.hcl
+key-terraform.json
+.terraform.lock.hcl
+*.old
+*.retry
+jdauphant.nginx
+# Vagrant & molecule
+.vagrant/
+*.log
+*.pyc
+.molecule
+.cache
+.pytest_cache
