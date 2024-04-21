@@ -1,2 +1,14 @@
-# VladimirOsintsev_infra
-VladimirOsintsev Infra repository
+ДЗ №4
+● Установим и настроим yc CLI для работы с нашим аккаунтом;
+● Создадим хост с помощью CLI;
+● Установим на нем ruby для работы приложения;
+● Установим MongoDB и запустим;
+● Задеплоим тестовое приложение, запустим и проверим его работу
+
+
+testapp_IP = 62.84.116.137
+testapp_port = 9292
+
+Дополнительное задание:
+Блок кода для добавление метаданных
+--metadata-from-file user-data=startup_script.yml \
