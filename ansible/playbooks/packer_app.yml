@@ -1,6 +1,10 @@
 - name: Configure hosts & deploy application
   hosts: all
   become: true
+  roles:
+    - role: app
+      tags:
+        - appinstall
   tasks:
   - name: Install ruby and bundler
     apt:
