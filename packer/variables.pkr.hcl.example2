@@ -1,0 +1,48 @@
+variable "service_account_key_file" {
+  type = string
+  default = "key-packer.json"
+}
+
+variable "folder_id" {
+  type = string
+  default = "b1g3v5m91gs0aigtbmgm"
+}
+
+variable "zone" {
+  type = string
+  default = "ru-central1-b"
+}
+
+variable "subnet_id" {
+  type = string
+  default = "e2lh9v0pnoreb92km802"
+}
+
+variable "use_ipv4_nat" {
+  type = string
+  default = "true"
+}
+
+variable "source_image_family" {
+  type = string
+  default = "ubuntu-1604-lts"
+}
+
+variable "image_family" {
+  type = string
+  default = "reddit-base"
+}
+
+variable "ssh_username" {
+  type = string
+  default = "ubuntu"
+}
+
+variable "platform_id" {
+  type = string
+  default = "standard-v1"
+}
+
+locals {
+  image_name = "reddit-base-${formatdate("MM-DD-YYYY", timestamp())}"
+}

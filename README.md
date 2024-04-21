@@ -1,2 +1,7 @@
-# VladimirOsintsev_infra
-VladimirOsintsev Infra repository
+ДЗ №8
+
+После выполнения комнды ansible app -m command -a 'rm -rf ~/reddit'
+playbook выполнил клонирования с git-репозитория и в результате вылнения плейбука
+changed стал равен 1, ansible изменил состояние ВМ
+
+Задание с *
