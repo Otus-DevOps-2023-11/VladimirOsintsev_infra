@@ -9,7 +9,6 @@
 В Vagrantfile добавлена строка для скачивания образов
 
  ENV['VAGRANT_SERVER_URL'] = 'https://vagrant.elab.pro'
-
  vagrant init
  vagrant up
  vagrant box list
